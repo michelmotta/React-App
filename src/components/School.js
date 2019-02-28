@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Input, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter, Table, Button} from 'reactstrap';
 import axios from 'axios';
+import Header from './Header';
 
 class School extends Component {
   state = {
@@ -103,7 +104,8 @@ class School extends Component {
       )
     });
     return (
-      <div className="App container">
+      <div className="container">
+        <Header></Header>
         <h1>Schools App</h1>
         <Button className="my-3" color="primary" onClick={this.toggleSchoolModal.bind(this)}>Add School</Button>
         <Modal isOpen={this.state.schoolModal} toggle={this.toggleSchoolModal.bind(this)}>
