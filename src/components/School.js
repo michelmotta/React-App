@@ -6,7 +6,7 @@ import Header from './Header';
 class School extends Component {
   state = {
     schools: [],
-    schoolData: {
+    schoolInfo: {
       id: null,
       name: '',
       email: '',
@@ -22,7 +22,7 @@ class School extends Component {
     this.setState({
       editing: false,
       schoolModal: !this.state.schoolModal,
-      schoolData: { 
+      schoolInfo: { 
         id: null,
         name: '', 
         email: '', 
@@ -32,14 +32,14 @@ class School extends Component {
   }
   addSchool() {
     axios
-    .post('http://localhost:3000/api/v1/schools', this.state.schoolData)
+    .post('http://localhost:3000/api/v1/schools', this.state.schoolInfo)
     .then((response) => {
       let {schools} = this.state;
       schools.unshift(response.data.data);
       this.setState({
         schools, 
         schoolModal: false, 
-        schoolData: { 
+        schoolInfo: { 
           id: null,
           name: '', 
           email: '', 
@@ -51,19 +51,19 @@ class School extends Component {
   editSchool(id, name, email, phone) {
     this.setState({
       editing: true,
-      schoolData: {id, name, email, phone}, 
+      schoolInfo: {id, name, email, phone}, 
       schoolModal: !this.state.schoolModal
     });
   }
   updateSchool() {
     let {name, email, phone} = this.state.shoolData;
-    axios.put('http://localhost:3000/api/v1/schools/' + this.state.schoolData.id, {name, email, phone})
+    axios.put('http://localhost:3000/api/v1/schools/' + this.state.schoolInfo.id, {name, email, phone})
     .then((response) => {
       this._refreshSchools();
       this.setState({
         editing: false,
         schoolModal: false,
-        schoolData: {
+        schoolInfo: {
           id: '',
           name: '',
           email: '',
@@ -106,39 +106,39 @@ class School extends Component {
     return (
       <div className="container">
         <Header></Header>
-        <h1>Schools App</h1>
+        <h1 className="text-center mt-5">Management of Schools</h1>
         <Button className="my-3" color="primary" onClick={this.toggleSchoolModal.bind(this)}>Add School</Button>
         <Modal isOpen={this.state.schoolModal} toggle={this.toggleSchoolModal.bind(this)}>
           <ModalHeader toggle={this.toggleSchoolModal.bind(this)}>{this.state.editing ? 'Edit School' : 'Add new School'}</ModalHeader>
           <ModalBody>
           <FormGroup>
             <Label for="name">Name</Label>
-            <Input type="text" id="name" value={this.state.schoolData.name} onChange={(e) => {
-              let { schoolData } = this.state;
+            <Input type="text" id="name" value={this.state.schoolInfo.name} onChange={(e) => {
+              let { schoolInfo } = this.state;
 
-              schoolData.name = e.target.value;
+              schoolInfo.name = e.target.value;
 
-              this.setState({schoolData})
+              this.setState({schoolInfo})
             }}/>
           </FormGroup>
           <FormGroup>
             <Label for="email">Email</Label>
-            <Input type="text" id="email" value={this.state.schoolData.email} onChange={(e) => {
-              let { schoolData } = this.state;
+            <Input type="text" id="email" value={this.state.schoolInfo.email} onChange={(e) => {
+              let { schoolInfo } = this.state;
 
-              schoolData.email = e.target.value;
+              schoolInfo.email = e.target.value;
 
-              this.setState({schoolData})
+              this.setState({schoolInfo})
             }}/>
           </FormGroup>
           <FormGroup>
             <Label for="phone">Phone</Label>
-            <Input type="text" id="phone" value={this.state.schoolData.phone} onChange={(e) => {
-              let { schoolData } = this.state;
+            <Input type="text" id="phone" value={this.state.schoolInfo.phone} onChange={(e) => {
+              let { schoolInfo } = this.state;
 
-              schoolData.phone = e.target.value;
+              schoolInfo.phone = e.target.value;
 
-              this.setState({schoolData})
+              this.setState({schoolInfo})
             }}/>
           </FormGroup>
           </ModalBody>
@@ -148,7 +148,7 @@ class School extends Component {
           </ModalFooter>
         </Modal>
 
-        <Table>
+        <Table className="table table-dark table-hover">
           <thead>
             <tr>
               <th>#</th>

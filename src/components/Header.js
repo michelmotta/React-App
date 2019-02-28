@@ -27,8 +27,8 @@ export default class Header extends Component {
     return (
       <div className="row">
         <div className="col-md-12">
-          <Navbar color="light" light expand="md">
-            <NavbarBrand href="/">School App</NavbarBrand>
+          <Navbar color="navbar-dark bg-dark" dark expand="md">
+            <NavbarBrand tag={Link} to="/">School App</NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
