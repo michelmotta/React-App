@@ -7,7 +7,7 @@ class School extends Component {
 	state = {
 		schools: [],
 		schoolInfo: {
-			id: null,
+			id: '',
 			name: '',
 			email: '',
 			phone: ''
@@ -22,12 +22,6 @@ class School extends Component {
 		this.setState({
 			editing: false,
 			schoolModal: !this.state.schoolModal,
-			schoolInfo: {
-				id: null,
-				name: '',
-				email: '',
-				phone: ''
-			}
 		});
 	}
 	addSchool() {
@@ -40,7 +34,7 @@ class School extends Component {
 					schools,
 					schoolModal: false,
 					schoolInfo: {
-						id: null,
+						id: '',
 						name: '',
 						email: '',
 						phone: ''
@@ -56,7 +50,7 @@ class School extends Component {
 		});
 	}
 	updateSchool() {
-		let { name, email, phone } = this.state.shoolData;
+		let { id, name, email, phone } = this.state.schoolInfo;
 		axios.put('http://localhost:3000/api/v1/schools/' + this.state.schoolInfo.id, { name, email, phone })
 			.then((response) => {
 				this._refreshSchools();
@@ -115,9 +109,7 @@ class School extends Component {
 							<Label for="name">Name</Label>
 							<Input type="text" id="name" value={this.state.schoolInfo.name} onChange={(e) => {
 								let { schoolInfo } = this.state;
-
 								schoolInfo.name = e.target.value;
-
 								this.setState({ schoolInfo })
 							}} />
 						</FormGroup>
@@ -125,9 +117,7 @@ class School extends Component {
 							<Label for="email">Email</Label>
 							<Input type="text" id="email" value={this.state.schoolInfo.email} onChange={(e) => {
 								let { schoolInfo } = this.state;
-
 								schoolInfo.email = e.target.value;
-
 								this.setState({ schoolInfo })
 							}} />
 						</FormGroup>
@@ -135,15 +125,13 @@ class School extends Component {
 							<Label for="phone">Phone</Label>
 							<Input type="text" id="phone" value={this.state.schoolInfo.phone} onChange={(e) => {
 								let { schoolInfo } = this.state;
-
 								schoolInfo.phone = e.target.value;
-
 								this.setState({ schoolInfo })
 							}} />
 						</FormGroup>
 					</ModalBody>
 					<ModalFooter>
-						<Button color="primary" onClick={this.addSchool.bind(this)}>{this.state.editing ? 'Update School' : 'Add School'}</Button>
+						<Button color="primary" onClick={this.state.editing ? this.updateSchool.bind(this) : this.addSchool.bind(this)}>{this.state.editing ? 'Update School' : 'Add School'}</Button>
 						<Button color="secondary" onClick={this.toggleSchoolModal.bind(this)}>Cancel</Button>
 					</ModalFooter>
 				</Modal>
