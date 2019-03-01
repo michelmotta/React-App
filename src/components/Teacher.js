@@ -12,7 +12,7 @@ class Teacher extends Component {
             name: '',
             email: '',
             phone: '',
-            subject: '',/*  */
+            subject: '',
             school_id: ''
         },
         teacherModal: false,
@@ -66,14 +66,16 @@ class Teacher extends Component {
             });
     }
     editTeacher(id, name, email, phone, subject, school_id) {
+        console.log(subject);
         this.setState({
             editing: true,
             teacherInfo: { id, name, email, phone, subject, school_id },
             teacherModal: !this.state.teacherModal
         });
+        console.log(this.state.editing);
     }
     updateTeacher() {
-        let { name, email, phone } = this.state.shoolData;
+        let { name, email, phone } = this.state.teacherInfo;
         axios.put('http://localhost:3000/api/v1/teachers/' + this.state.teacherInfo.id, { name, email, phone })
             .then((response) => {
                 this._refreshTeachers();
@@ -139,7 +141,7 @@ class Teacher extends Component {
                     <ModalBody>
                         <FormGroup>
                             <Label for="name">Name</Label>
-                            <Input type="text" id="name" value={this.state.teacherInfo.name} onChange={(e) => {
+                            <Input type="text" id="name" value={this.state.teacherInfo.name  || ''} onChange={(e) => {
                                 let { teacherInfo } = this.state;
                                 teacherInfo.name = e.target.value;
                                 this.setState({ teacherInfo })
@@ -147,7 +149,7 @@ class Teacher extends Component {
                         </FormGroup>
                         <FormGroup>
                             <Label for="email">Email</Label>
-                            <Input type="text" id="email" value={this.state.teacherInfo.email} onChange={(e) => {
+                            <Input type="text" id="email" value={this.state.teacherInfo.email || ''} onChange={(e) => {
                                 let { teacherInfo } = this.state;
                                 teacherInfo.email = e.target.value;
                                 this.setState({ teacherInfo })
@@ -155,7 +157,7 @@ class Teacher extends Component {
                         </FormGroup>
                         <FormGroup>
                             <Label for="phone">Phone</Label>
-                            <Input type="text" id="phone" value={this.state.teacherInfo.phone} onChange={(e) => {
+                            <Input type="text" id="phone" value={this.state.teacherInfo.phone || ''} onChange={(e) => {
                                 let { teacherInfo } = this.state;
                                 teacherInfo.phone = e.target.value;
                                 this.setState({ teacherInfo })
@@ -163,7 +165,7 @@ class Teacher extends Component {
                         </FormGroup>
                         <FormGroup>
                             <Label for="Subject">Subject</Label>
-                            <Input type="text" id="subject" value={this.state.teacherInfo.subject} onChange={(e) => {
+                            <Input type="text" id="subject" value={this.state.teacherInfo.subject || ''} onChange={(e) => {
                                 let { teacherInfo } = this.state;
                                 teacherInfo.subject = e.target.value;
                                 this.setState({ teacherInfo })
@@ -181,7 +183,7 @@ class Teacher extends Component {
                         </FormGroup>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.addTeacher.bind(this)}>{this.state.editing ? 'Update Teacher' : 'Add Teacher'}</Button>
+                        <Button color="primary" onClick={this.state.editing ? this.updateTeacher.bind(this) : this.addTeacher.bind(this)}>{this.state.editing ? 'Update Teacher' : 'Add Teacher'}</Button>
                         <Button color="secondary" onClick={this.toggleTeacherModal.bind(this)}>Cancel</Button>
                     </ModalFooter>
                 </Modal>

@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import { Input, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter, Table, Button } from 'reactstrap';
 import axios from 'axios';
 import Header from './Header';
 
 class School extends Component {
+	notify = () => {
+		toast("", {
+		  	toastId: 1
+		});
+	}
 	state = {
 		schools: [],
 		schoolInfo: {
@@ -40,6 +46,9 @@ class School extends Component {
 						phone: ''
 					}
 				});
+				toast.success(response.data.message, {
+					position: "top-right"
+				});
 			});
 	}
 	editSchool(id, name, email, phone) {
@@ -50,6 +59,7 @@ class School extends Component {
 		});
 	}
 	updateSchool() {
+		let toastId = null;
 		let { id, name, email, phone } = this.state.schoolInfo;
 		axios.put('http://localhost:3000/api/v1/schools/' + this.state.schoolInfo.id, { name, email, phone })
 			.then((response) => {
@@ -64,6 +74,9 @@ class School extends Component {
 						phone: ''
 					}
 				});
+				toast.success(response.data.message, {
+					position: "top-right"
+				});
 			});
 	}
 	deleteSchool(id) {
@@ -71,6 +84,9 @@ class School extends Component {
 			.delete('http://localhost:3000/api/v1/schools/' + id)
 			.then((response) => {
 				this._refreshSchools();
+				toast.success(response.data.message, {
+					position: "top-right"
+				});
 			});
 	}
 	_refreshSchools() {
@@ -100,6 +116,7 @@ class School extends Component {
 		return (
 			<div className="container">
 				<Header></Header>
+				<ToastContainer />
 				<h1 className="text-center mt-5">Management of Schools</h1>
 				<Button className="my-3" color="primary" onClick={this.toggleSchoolModal.bind(this)}>Add School</Button>
 				<Modal isOpen={this.state.schoolModal} toggle={this.toggleSchoolModal.bind(this)}>
