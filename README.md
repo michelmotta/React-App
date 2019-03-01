@@ -14,9 +14,13 @@ Para que este projeto possa funcionar corretamente é necessário que a aplicaç
 
 `npm start`
 
+- Por padrão a aplicação roda em http://localhost:3000, mas se a aplicação servidora estiver rodando, a porta a ser utilizada nesta aplicacão será a 3001. 
+
+`http://localhost:3001`
+
 
 ## Tecnologias utilizadas neste projeto
 
-- [ReactJS](https://reactjs.org) 
+- [ReactJS](https://reactjs.org)
 - [Reactstrap](https://reactstrap.github.io)
-- [Axios](https://github.com/axios/axios) 
+- [Axios](https://github.com/axios/axios)
