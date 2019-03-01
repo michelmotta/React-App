@@ -5,11 +5,6 @@ import axios from 'axios';
 import Header from './Header';
 
 class School extends Component {
-	notify = () => {
-		toast("", {
-		  	toastId: 1
-		});
-	}
 	state = {
 		schools: [],
 		schoolInfo: {
