@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import { Input, FormGroup, Label, Modal, ModalHeader, ModalBody, ModalFooter, Table, Button } from 'reactstrap';
 import axios from 'axios';
 import Header from './Header';
@@ -63,16 +64,17 @@ class Teacher extends Component {
                         school_id: ''
                     }
                 });
+                toast.success(response.data.message, {
+					position: "top-right"
+				});
             });
     }
     editTeacher(id, name, email, phone, subject, school_id) {
-        console.log(subject);
         this.setState({
             editing: true,
             teacherInfo: { id, name, email, phone, subject, school_id },
             teacherModal: !this.state.teacherModal
         });
-        console.log(this.state.editing);
     }
     updateTeacher() {
         let { name, email, phone } = this.state.teacherInfo;
@@ -91,6 +93,9 @@ class Teacher extends Component {
                         school_id: ''
                     }
                 });
+                toast.success(response.data.message, {
+					position: "top-right"
+				});
             });
     }
     deleteTeacher(id) {
@@ -98,6 +103,9 @@ class Teacher extends Component {
             .delete('http://localhost:3000/api/v1/teachers/' + id)
             .then((response) => {
                 this._refreshTeachers();
+                toast.success(response.data.message, {
+					position: "top-right"
+				});
             });
     }
     _refreshTeachers() {
@@ -134,6 +142,7 @@ class Teacher extends Component {
         return (
             <div className="container">
                 <Header></Header>
+                <ToastContainer />
                 <h1 className="text-center mt-5">Management of Teachers</h1>
                 <Button className="my-3" color="primary" onClick={this.toggleTeacherModal.bind(this)}>Add Teacher</Button>
                 <Modal isOpen={this.state.teacherModal} toggle={this.toggleTeacherModal.bind(this)}>
